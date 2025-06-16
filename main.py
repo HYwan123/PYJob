@@ -50,17 +50,28 @@ async def main():
                     if result:
                         await result[0].click()
                         console.print("✅ 已点击'打招呼'。")
+                        await page.wait_for_timeout(1500) # 等待弹窗出现
+
+                        # 检查是否达到沟通上限
+                        limit_message_locator = page.locator(".chat-block-body").locator("p");
+
+                        if await limit_message_locator.is_visible() and await limit_message_locator.text_content() == "今日沟通人数已达上限，请明天再试":
+                            console.print(Panel("🚫 [bold red]今日沟通人数已达上限！[/bold red] 脚本将自动停止。请明天再试。", title="[bold yellow]操作限制[/bold yellow]", border_style="yellow"))
+                            # 点击"确定"按钮关闭弹窗
+                            sure_btn = page.locator(".chat-block-container .sure-btn")
+                            if await sure_btn.is_visible():
+                                await sure_btn.click()
+                            return # 退出 main 函数，finally 块会处理后续
+
+                        # 如果未达到上限，则处理常规的聊天弹窗
+                        cancel_btn = page.locator(".cancel-btn")
+                        if await cancel_btn.is_visible():
+                            await cancel_btn.click()
+                            console.print("✅ 已关闭弹窗。")
+                        else:
+                            console.print("ℹ️ 未找到弹窗关闭按钮，可能无需关闭。")
                     else:
                         console.print("❌ 未找到'打招呼'按钮，跳过。")
-
-                    await page.wait_for_timeout(1000)
-                    
-                    cancel_btn = page.locator(".cancel-btn")
-                    if await cancel_btn.is_visible():
-                        await cancel_btn.click()
-                        console.print("✅ 已关闭弹窗。")
-                    else:
-                        console.print("ℹ️ 未找到弹窗关闭按钮，可能无需关闭。")
 
                 console.print("[bold green]\n本轮操作完成。等待30秒后开始下一轮...[/bold green]")
                 await page.wait_for_timeout(30000) # Wait 30 seconds before next round
