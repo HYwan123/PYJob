@@ -1,5 +1,7 @@
 # 招聘网站自动沟通脚本
 
+
+![](image.png)
 <p align="center">
   <a href="https://github.com/HYwan123/PYJob/stargazers"><img src="https://img.shields.io/github/stars/HYwan123/PYJob?style=social" alt="GitHub stars"></a>
   <a href="https://github.com/HYwan123/PYJob/network/members"><img src="https://img.shields.io/github/forks/HYwan123/PYJob?style=social" alt="GitHub forks"></a>
@@ -9,8 +11,6 @@
   <img src="https://img.shields.io/github/last-commit/HYwan123/PYJob" alt="GitHub last commit">
   <img src="https://img.shields.io/github/issues/HYwan123/PYJob" alt="GitHub issues">
 </p>
-
-![](image.png)
 
 这是一个基于 Playwright 和 `rich` 构建的 Python 自动化脚本，旨在自动与招聘网站上的新职位进行"打招呼"，以提高求职效率。
 
